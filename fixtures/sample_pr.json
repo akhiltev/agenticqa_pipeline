@@ -1,0 +1,15 @@
+{
+  "id": "PR-501",
+  "title": "CDL: skip trailing blank lines when converting CSV text to JSONArray",
+  "description": "Fixes CDL.toJSONArray so trailing blank lines in CSV input no longer produce spurious empty JSONObject rows in the resulting JSONArray. Implements the acceptance criteria of PROJ-105.",
+  "source_branch": "feature/cdl-trailing-blank-lines",
+  "target_branch": "master",
+  "linked_work_item_ids": ["PROJ-105"],
+  "files": [
+    {
+      "path": "src/main/java/org/json/CDL.java",
+      "change_type": "edit",
+      "diff_text": "@@ -340,6 +340,7 @@ public class CDL {\n      * @param delimiter custom delimiter char\n      * @return A JSONArray of JSONObjects.\n      * @throws JSONException if a called function fails\n+     *         Trailing blank lines in the source text are now skipped.\n      */\n     public static JSONArray toJSONArray(JSONArray names, JSONTokener x, char delimiter) throws JSONException {\n         if (names == null || names.length() == 0) {\n@@ -348,7 +349,11 @@ public class CDL {\n         JSONArray ja = new JSONArray();\n         for (;;) {\n             JSONObject jo = rowToJSONObject(names, x, delimiter);\n-            if (jo == null) {\n+            if (jo == null) {\n+                break;\n+            }\n+            // Skip rows produced entirely from a trailing blank line.\n+            if (isBlankRow(jo)) {\n                 break;\n             }\n             ja.put(jo);\n"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "work_items": [
+    {
+      "id": "PROJ-101",
+      "title": "JSONObject should safely truncate very large numeric strings",
+      "description": "As an API consumer, I want JSONObject.optBigDecimal / put(String, Number) to handle extremely long numeric literals without throwing an unhandled ArithmeticException, so that malformed or adversarial input does not crash the parser.",
+      "acceptance_criteria": "- Parsing a JSON number with 1000+ digits does not throw an unhandled exception.\n- JSONObject.optBigDecimal(key, default) returns the default value when the stored value cannot be converted.\n- Existing valid numeric parsing behavior is unchanged for normal-sized numbers.",
+      "tags": ["json-object", "numbers", "robustness"],
+      "links": []
+    },
+    {
+      "id": "PROJ-102",
+      "title": "XML.toJSONObject should preserve attribute ordering for round-trip conversion",
+      "description": "As a developer converting XML documents to JSONObject via XML.toJSONObject, I want attribute and child element ordering to be preserved deterministically, so that XML.toString(JSONObject) round-trips produce stable output for diffing and testing.",
+      "acceptance_criteria": "- Converting an XML element with multiple attributes preserves attribute order in the resulting JSONObject's internal ordering.\n- Round-tripping XML -> JSONObject -> XML produces output with the same attribute order as the input.\n- Existing XML parsing tests continue to pass.",
+      "tags": ["xml", "json-object", "ordering"],
+      "links": ["PROJ-101"]
+    },
+    {
+      "id": "PROJ-103",
+      "title": "JSONArray.toList() should deep-convert nested JSONObject/JSONArray values",
+      "description": "As a consumer of JSONArray, I want toList() to recursively convert any nested JSONObject or JSONArray elements into plain Map/List structures, so that downstream code does not need to special-case JSON types when consuming array contents.",
+      "acceptance_criteria": "- JSONArray.toList() on an array containing a nested JSONObject returns a List where that element is a Map.\n- JSONArray.toList() on an array containing a nested JSONArray returns a List where that element is a List.\n- Primitive values (String, Number, Boolean, null) are preserved as-is.",
+      "tags": ["json-array", "conversion"],
+      "links": []
+    },
+    {
+      "id": "PROJ-104",
+      "title": "JSONTokener should report accurate line/column numbers on malformed input",
+      "description": "As a developer debugging malformed JSON input, I want JSONException messages produced during tokenizing to include accurate line and column numbers, so that I can quickly locate the offending character in large documents.",
+      "acceptance_criteria": "- Parsing malformed JSON with an unexpected character reports the correct 1-based line number.\n- Parsing malformed JSON with an unexpected character reports the correct 1-based column number.\n- Behavior for well-formed input is unaffected.",
+      "tags": ["json-tokener", "error-handling"],
+      "links": []
+    },
+    {
+      "id": "PROJ-105",
+      "title": "CDL (CSV) parsing should tolerate trailing blank lines",
+      "description": "As a user of the CDL utility, I want CDL.toJSONArray to tolerate trailing blank lines in CSV input without producing spurious empty rows, so that CSV exported from common spreadsheet tools parses cleanly.",
+      "acceptance_criteria": "- CSV input with one or more trailing blank lines produces a JSONArray with no trailing empty JSONObject entries.\n- CSV input with a blank line in the middle of the data is still treated per existing (documented) behavior.\n- Header-only CSV input still produces an empty JSONArray without error.",
+      "tags": ["cdl", "csv", "parsing"],
+      "links": []
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+# Agentic QA Pipeline - Python dependencies
+# Install into the project venv: .venv\Scripts\pip install -r requirements.txt
+
+# LLM backend
+openai>=1.51.0
+
+# A2A protocol SDK
+a2a-sdk>=1.1.0
+
+# MCP (Model Context Protocol)
+mcp>=1.9.0
+
+# Guardrails AI (LLM output validation)
+guardrails-ai>=0.11.0
+
+# RAG vector store
+chromadb>=1.0.0
+
+# Graphify (knowledge graph extraction) - PyPI package is temporarily named `graphifyy`
+graphifyy
+
+# HTTP client for connectors (Azure DevOps REST API)
+requests>=2.32.0
+
+# Config / env handling
+python-dotenv>=1.0.0
+pydantic>=2.8.0
+
+# Coverage/XML parsing utilities
+lxml>=5.2.0
+
+# UI backend (FastAPI + SSE for the demo web UI, ui_backend/)
+fastapi>=0.110.0
+

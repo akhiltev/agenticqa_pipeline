@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+tools/
+rag/chroma_store/
+reports/*.md
+reports/suite_health.json
+sut/target/
+sut/graphify-out/
+.env
+installed_versions.txt
+*.log
+ui/node_modules/
+ui/dist/
+
